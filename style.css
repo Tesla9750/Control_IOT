@@ -1,0 +1,204 @@
+/* --- Paleta de Colores y Estilos Globales --- */
+:root {
+    /* Colores para el Header y Footer (Gradiente) */
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --light-text-color: #f8f9fa;
+
+    /* Colores para el Contenido (Neumórfico) */
+    --bg-color: #e0e5ec;
+    --primary-text: #5a677a;
+    --highlight-color: #ffffff;
+    --shadow-color: #a3b1c6;
+    --stop-color: #ff6b6b;
+    --stop-shadow: #e05a5a;
+    --success-color: #28a745;
+    --success-shadow: #218838;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Diseño del Navbar y Footer --- */
+.navbar-custom,
+.footer-custom {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.navbar-custom .navbar-brand, .navbar-custom .nav-link, .footer-custom p {
+    color: var(--light-text-color) !important;
+}
+.navbar-custom .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* --- Diseño de Tarjetas (Neumórfico) --- */
+.card {
+    border-radius: 20px;
+    background: var(--bg-color);
+    box-shadow: 8px 8px 15px var(--shadow-color), -8px -8px 15px var(--highlight-color);
+    border: none;
+}
+/* MODIFICADO: Se ajusta para contenido flexible (formularios, tablas, etc.) */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Permite que los elementos ocupen el ancho completo */
+    text-align: left;
+}
+/* NUEVO: Clase específica para centrar contenido como en la página de control */
+.card-body.card-body-centered {
+    align-items: center;
+    text-align: center;
+}
+
+
+/* --- Pad de Control (Layout) --- */
+.control-pad {
+    display: grid;
+    gap: 15px;
+    width: 320px;
+    height: 250px;
+    grid-template-areas:
+        "top-left up      top-right"
+        "left     center  right"
+        "spin-left down spin-right";
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.status-indicator {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-text);
+    text-align: center; /* Asegura que los títulos estén centrados */
+}
+
+/* --- Estilo de Botones "Neumórfico" --- */
+.btn-custom {
+    border-radius: 12px;
+    background: var(--bg-color);
+    border: none;
+    color: var(--primary-text);
+    box-shadow: 5px 5px 10px var(--shadow-color), -5px -5px 10px var(--highlight-color);
+    transition: all 0.1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 10px;
+}
+
+.btn-custom:active {
+    box-shadow: inset 5px 5px 10px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+    transform: scale(0.98);
+}
+
+.btn-custom i {
+    font-size: 2rem;
+}
+.btn-custom span {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.btn-custom.btn-stop {
+    color: #fff;
+    background: var(--stop-color);
+    box-shadow: 5px 5px 10px var(--stop-shadow), -5px -5px 10px #ff8a8a;
+}
+
+.btn-custom.btn-stop:active {
+     box-shadow: inset 5px 5px 10px var(--stop-shadow), inset -5px -5px 10px #ff8a8a;
+}
+
+/* --- Estilos para la Tabla --- */
+.table {
+    background-color: transparent;
+    color: var(--primary-text);
+}
+
+.table thead th {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-hover > tbody > tr:hover > * {
+    color: var(--primary-text);
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+/* --- INICIO DE NUEVOS ESTILOS --- */
+
+/* --- Estilos Neumórficos para Formularios --- */
+.form-control, .form-select {
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 15px;
+    box-shadow: inset 4px 4px 8px var(--shadow-color), 
+                inset -4px -4px 8px var(--highlight-color);
+}
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    box-shadow: inset 4px 4px 8px var(--shadow-color), 
+                inset -4px -4px 8px var(--highlight-color);
+    border-color: transparent; /* Evita el borde azul de Bootstrap */
+    outline: none;
+}
+
+/* --- Estilos para Pestañas (Tabs) de la página de Demos --- */
+.nav-tabs {
+    border-bottom: 1px solid var(--shadow-color);
+}
+.nav-tabs .nav-link {
+    border: none;
+    color: var(--primary-text);
+    border-radius: 10px 10px 0 0;
+    font-weight: 600;
+    margin-right: 5px;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+.nav-tabs .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+/* La pestaña activa parece estar "conectada" a la tarjeta */
+.nav-tabs .nav-link.active {
+    background-color: var(--bg-color);
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    box-shadow: 0 -5px 10px -5px var(--shadow-color); /* Sombra sutil arriba */
+}
+
+/* --- Estilos para Grupos de Inputs del Dashboard --- */
+.input-group .form-select {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* NUEVO: Estilo para la tabla de referencia de demos */
+.table-reference {
+    font-size: 0.85rem; /* Hacemos el texto un poco más pequeño */
+}
+
+.table-reference thead th {
+    font-weight: 700;
+    color: var(--primary-text);
+}
+
+.table-reference td, .table-reference th {
+    padding: 0.4rem; /* Reducimos el espaciado para hacerla más compacta */
+}
