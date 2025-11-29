@@ -11,7 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- MODIFICADO: Añadimos la referencia al span de distancia ---
     const distanceValueEl = document.getElementById('distance-value'); 
+    // --- NUEVO: Referencias y Lógica de Velocidad ---
+    let currentSpeed = 190; // Iniciamos en Velocidad Media por defecto
+    const speedButtons = document.querySelectorAll('.speed-btn');
 
+    speedButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // 1. Actualizar variable global
+            currentSpeed = parseInt(btn.getAttribute('data-speed'));
+            
+            // 2. Actualizar UI (clase active-speed)
+            speedButtons.forEach(b => b.classList.remove('active-speed'));
+            btn.classList.add('active-speed');
+            
+            console.log(`Velocidad configurada a: ${currentSpeed}`);
+        });
+    });
     // --- Mapeo de Acciones (sin cambios) ---
     const statusMap = {
         1: 'Avanzando', 2: 'Retrocediendo', 3: 'Detenido', 4: 'Avance Derecha',
@@ -119,28 +135,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     connectWebSocket();
 
-    // --- Función Principal para Enviar Comandos (Sin cambios) ---
-    // Esta función actualiza correctamente el indicador de ARRIBA
+// --- Función Principal para Enviar Comandos (ACTUALIZADA) ---
     function sendLiveCommand(movementKey) {
         const statusText = statusMap[movementKey] || 'DESCONOCIDO';
-        statusIndicator.textContent = statusText.toUpperCase(); // <-- Arriba (Estado)
+        statusIndicator.textContent = statusText.toUpperCase();
         
+        // Color del indicador
         if (movementKey === 3) {
             statusIndicator.style.color = 'var(--stop-color)';
         } else {
             statusIndicator.style.color = 'var(--secondary-color)';
         }
         
-        const velocidad = (movementKey === 3) ? 0 : 100;
+        // --- LÓGICA DE VELOCIDAD ---
+        let velocidadEnvio = 0;
+
+        // Definimos qué teclas son "giros calibrados" (excepciones)
+        // 10, 11: Giros 360 | 13, 14: Giros 90
+        const calibratedTurns = [10, 11, 13, 14];
+
+        if (movementKey === 3) {
+            // Caso 1: Detener
+            velocidadEnvio = 0;
+        } else if (calibratedTurns.includes(movementKey)) {
+            // Caso 2: Giros de precisión (Mantienen velocidad fija de calibración)
+            velocidadEnvio = 255; 
+        } else {
+            // Caso 3: Movimientos normales (Usan la velocidad seleccionada por el usuario)
+            velocidadEnvio = currentSpeed;
+        }
 
         const commandData = {
             dispositivo_id: DEVICE_ID,
             comando_clave: movementKey,
-            velocidad: velocidad
+            velocidad: velocidadEnvio // <-- Aquí va la nueva variable calculada
         };
 
         if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify(commandData));
+            const jsonToSend = JSON.stringify(commandData);
+            console.log("[WS] Enviando:", jsonToSend); // Log para depurar
+            ws.send(jsonToSend);
         } else {
             console.warn("WebSocket no está abierto. Comando no enviado.");
             statusIndicator.textContent = 'NO CONECTADO';

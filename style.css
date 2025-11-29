@@ -227,3 +227,25 @@ body {
     margin-top: 10px;
     margin-bottom: 0;
 }
+
+/* --- Estilos para Control de Velocidad --- */
+.speed-btn {
+    flex-direction: row; /* Icono al lado del texto para ahorrar espacio vertical */
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.speed-btn i {
+    font-size: 1.2rem;
+    margin-right: 5px;
+}
+
+/* Estado activo para la velocidad seleccionada */
+.btn-custom.active-speed {
+    color: var(--secondary-color); /* Color azul */
+    background-color: var(--bg-color);
+    /* Efecto "hundido" permanente */
+    box-shadow: inset 5px 5px 10px var(--shadow-color), 
+                inset -5px -5px 10px var(--highlight-color);
+    border: 1px solid rgba(37, 117, 252, 0.3); /* Borde sutil */
+}
