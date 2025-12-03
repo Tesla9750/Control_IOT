@@ -79,21 +79,23 @@ main {
 .card-body.card-body-centered {
     align-items: center;
     text-align: center;
-    justify-content: center; /* Centra verticalmente también */
+    justify-content: center; 
+    padding: 0.5rem !important; /* Reducido a 0.5rem */
 }
 
 
 /* --- Pad de Control (Layout) --- */
 /* --- Pad de Control (Responsivo) --- */
+/* --- Pad de Control (Compacto) --- */
 .control-pad {
     display: grid;
-    gap: 10px; /* Gap ligeramente reducido */
+    gap: 6px; /* Reducido de 10px a 6px */
     width: 100%; 
-    max-width: 400px; /* Mantiene el tamaño ideal en PC */
-    aspect-ratio: 5/4; /* Mantiene la forma rectangular automáticamente */
-    height: auto; /* La altura se calcula sola */
-    margin-bottom: 40px;
-    margin-left: auto ;
+    max-width: 260px; /* Reducido de 400px a 260px para hacerlo compacto */
+    aspect-ratio: 5/4; 
+    height: auto; 
+    margin-bottom: 25px; /* Reducido de 40px a 15px */
+    margin-left: auto;
     margin-right: auto;
     
     grid-template-columns: repeat(5, 1fr); 
@@ -105,9 +107,11 @@ main {
         ".        bottom-left down        bottom-right ."
         ".        spin-left   horn        spin-right  .";
 }
-/* Ajuste para que los iconos no se vean gigantes en móviles */
+
+/* Ajuste de iconos para móviles y escritorio (Más pequeños) */
 .btn-custom i {
-    font-size: clamp(1.2rem, 5vw, 2rem); 
+    /* Reducido: antes era clamp(1.2rem... 2rem) */
+    font-size: clamp(1rem, 4vw, 1.4rem) !important; 
 }
 /* --- Tablas con scroll interno fijo --- */
 .table-responsive {
@@ -121,49 +125,54 @@ main {
     color: var(--primary-text);
     text-align: center; /* Asegura que los títulos estén centrados */
 }
-
-/* --- Estilo de Botones "Neumórfico" --- */
+/* --- Estilo de Botones "Neumórfico" Compacto --- */
 .btn-custom {
-    border-radius: 12px;
+    border-radius: 10px; /* Radio un poco más cerrado */
     background: var(--bg-color);
     border: none;
     color: var(--primary-text);
-    box-shadow: 5px 5px 10px var(--shadow-color), -5px -5px 10px var(--highlight-color);
+    /* Sombras ligeramente reducidas para ajustarse al tamaño */
+    box-shadow: 4px 4px 8px var(--shadow-color), -4px -4px 8px var(--highlight-color);
     transition: all 0.1s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4px;
-    padding: 10px;
+    gap: 2px; /* Menos espacio entre icono y texto */
+    padding: 6px; /* Reducido de 10px a 6px */
 }
 
 .btn-custom:active {
-    box-shadow: inset 5px 5px 10px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+    box-shadow: inset 4px 4px 8px var(--shadow-color), inset -4px -4px 8px var(--highlight-color);
     transform: scale(0.98);
 }
 
+/* Tamaño base del icono (se sobreescribe con el clamp de arriba, pero por seguridad) */
 .btn-custom i {
-    font-size: 2rem;
+    font-size: 1.4rem; /* Reducido de 2rem */
 }
+
+/* Tamaño del texto debajo del icono */
 .btn-custom span {
-    font-size: 0.75rem;
+    font-size: 0.65rem; /* Reducido de 0.75rem */
     font-weight: 600;
+    line-height: 1; /* Evita que el texto ocupe mucha altura */
 }
 /* --- ¡NUEVO BLOQUE DE CÓDIGO! --- */
 /* Estilos específicos para los botones anchos de Secuencia y Auto */
 [data-action="12"].btn-custom, 
 #btn-auto-mode.btn-custom {
-    font-size: 0.9rem;      /* Reduce el tamaño del texto */
-    padding-top: 8px;       /* Reduce el padding (altura) */
-    padding-bottom: 8px;    /* Reduce el padding (altura) */
-    /* ¡LÍNEA NUEVA! Separa este botón del de Secuencia */
-    margin-top: 10px;
+    font-size: 0.8rem;      
+    padding-top: 6px;       
+    padding-bottom: 6px;    
+    margin-top: 8px;        /* Reducido un poco */
+    min-height: 40px;       /* Asegura que sean clicables */
 }
-/* Reduce el icono solo en esos botones */
+
 [data-action="12"].btn-custom i, 
 #btn-auto-mode.btn-custom i {
-    font-size: 1.2rem; /* Tamaño de icono más pequeño */
+    font-size: 1.1rem !important; /* Icono pequeño para estos botones */
+    margin-bottom: 2px;
 }
 /* --- FIN DEL NUEVO BLOQUE --- */
 .btn-custom.btn-stop {
