@@ -11,20 +11,19 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-custom py-1"> <div class="container">
             <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-robot"></i> Control Robot IOT</a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link active" href="index.html">Control</a> <a class="nav-link" href="demos.html">Demos</a>     
+                <a class="nav-link active" href="index.html">Control</a>
+                <a class="nav-link" href="demos.html">Demos</a>     
                 <a class="nav-link" href="dashboard.html">Obstaculos</a>
             </div>
         </div>
     </nav>
 
-    <main class="container my-5 flex-grow-1 d-flex justify-content-center align-items-center">
-        <div class="col-lg-7 col-md-9">
-            <div class="card shadow-lg">
-                <div class="card-body p-4 p-md-5 card-body-centered">
+    <main class="container flex-grow-1 d-flex justify-content-center align-items-center h-100" style="overflow: hidden;">
+        <div class="col-lg-6 col-md-8 col-sm-12 h-100 py-2"> <div class="card shadow-lg h-100">
+                <div class="card-body card-body-centered d-flex flex-column justify-content-center h-100">
                     
                     <div class="control-pad">
                         <button id="btn-forward-left" class="btn-custom" style="grid-area: top-left;"><i class="bi bi-arrow-up-left"></i></button>
@@ -48,50 +47,47 @@
                         <button id="btn-spin-right" class="btn-custom" style="grid-area: spin-right;"><i class="bi bi-arrow-clockwise"></i><span>360</span></button>
                     </div>
                     
-                    <button data-action="12" class="btn-custom w-100" style="margin-top: 15px; font-size: 1rem; padding: 10px;">
-                        <i class="bi bi-play-circle-fill"></i> Ejecutar Secuencia
-                    </button>
-                    
-                    <button data-action="15" id="btn-auto-mode" class="btn-custom w-100" style="margin-top: 15px; font-size: 1rem; padding: 10px;">
-                        <i class="bi bi-robot"></i> Iniciar Modo Autónomo
-                    </button>
-                    <div class="w-100 mt-3">
-                        <label class="form-label ms-2">Control de Velocidad:</label>
-                        <div class="d-flex justify-content-between gap-2">
-                            <button class="btn-custom speed-btn w-100" data-speed="170">
-                                <i class="bi bi-speedometer"></i> Baja
+                    <div class="row w-100 g-2">
+                        <div class="col-6">
+                            <button data-action="12" class="btn-custom w-100 py-2">
+                                <i class="bi bi-play-circle-fill"></i> Secuencia
                             </button>
-                            <button class="btn-custom speed-btn w-100 active-speed" data-speed="210">
-                                <i class="bi bi-speedometer2"></i> Media
-                            </button>
-                            <button class="btn-custom speed-btn w-100" data-speed="255">
-                                <i class="bi bi-lightning-charge-fill"></i> Alta
+                        </div>
+                        <div class="col-6">
+                            <button data-action="15" id="btn-auto-mode" class="btn-custom w-100 py-2">
+                                <i class="bi bi-robot"></i> Autónomo
                             </button>
                         </div>
                     </div>
+
+                    <div class="w-100 mt-2">
+                        <div class="d-flex justify-content-between gap-1">
+                            <button class="btn-custom speed-btn w-100 p-1" data-speed="170"><i class="bi bi-speedometer"></i> Baja</button>
+                            <button class="btn-custom speed-btn w-100 active-speed p-1" data-speed="210"><i class="bi bi-speedometer2"></i> Media</button>
+                            <button class="btn-custom speed-btn w-100 p-1" data-speed="255"><i class="bi bi-lightning-charge-fill"></i> Alta</button>
+                        </div>
+                    </div>
                     
-                    <div class="w-100 mt-3 text-start">
-                        <label for="melody-select" class="form-label ms-2">Melodía:</label>
-                        <select id="melody-select" class="form-select">
+                    <div class="w-100 mt-2 d-flex align-items-center gap-2">
+                         <select id="melody-select" class="form-select form-select-sm">
                             <option value="0">Melodía 1 (Nightmare)</option>
                             <option value="1">Melodía 2 (Piratas)</option>
                             <option value="2">Melodía 3 (Star Wars)</option>
                             <option value="3">Melodía 4 (Tokio Drift)</option>
                         </select>
+                         <p id="status-indicator" class="status-indicator mb-0 ms-auto" style="font-size: 1rem;">DETENIDO</p>
                     </div>
-                    
-                    <p id="status-indicator" class="status-indicator mt-4">DETENIDO</p>
-                    
-                    <p class="distance-display mt-2">Distancia: <span id="distance-value">--</span> cm</p>
 
-                    </div>
+                    <p class="distance-display mt-1 mb-0"><small>Distancia:</small> <span id="distance-value">--</span> cm</p>
+
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="footer-custom text-center py-3 mt-auto">
+    <footer class="footer-custom text-center py-2 mt-auto">
         <div class="container">
-            <p class="mb-0">&copy; 2025 | Desarrollado por: Juan de Dios Benitez Nava - 21200582</p>
+            <p class="mb-0 small">&copy; 2025 | Juan de Dios Benitez Nava - 21200582</p>
         </div>
     </footer>
 

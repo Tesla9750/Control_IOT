@@ -16,10 +16,24 @@
     --success-shadow: #218838;
 }
 
-body {
+/* --- Ajustes Globales para "Sin Scroll" --- */
+html, body {
+    height: 100vh; /* Fuerza la altura al 100% de la ventana */
+    margin: 0;
+    overflow: hidden; /* IMPORTANTE: Elimina el scroll de toda la página */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
     color: var(--primary-text);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* El main ahora ocupa el espacio flexible entre navbar y footer */
+main {
+    flex: 1;
+    overflow-y: auto; /* El scroll aparece solo aquí si es necesario */
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
 }
 
 /* --- Diseño del Navbar y Footer --- */
@@ -38,45 +52,65 @@ body {
 }
 
 /* --- Diseño de Tarjetas (Neumórfico) --- */
+/* --- Diseño de Tarjetas (Neumórfico) --- */
 .card {
     border-radius: 20px;
     background: var(--bg-color);
     box-shadow: 8px 8px 15px var(--shadow-color), -8px -8px 15px var(--highlight-color);
     border: none;
-}
-/* MODIFICADO: Se ajusta para contenido flexible (formularios, tablas, etc.) */
-.card-body {
+    max-height: 100%; /* La tarjeta no puede ser más alta que la pantalla */
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Permite que los elementos ocupen el ancho completo */
-    text-align: left;
+    overflow: hidden; /* Evita que crezca infinitamente */
 }
-/* NUEVO: Clase específica para centrar contenido como en la página de control */
+
+.card-body {
+    flex: 1; /* Ocupa todo el espacio disponible en la tarjeta */
+    overflow-y: auto; /* Scroll interno SI el contenido es muy largo */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    padding: 1.5rem !important;
+}
+
 .card-body.card-body-centered {
     align-items: center;
     text-align: center;
+    justify-content: center; /* Centra verticalmente también */
 }
 
 
 /* --- Pad de Control (Layout) --- */
-/* --- Pad de Control (Layout) --- */
+/* --- Pad de Control (Responsivo) --- */
 .control-pad {
     display: grid;
-    gap: 15px;
-    width: 400px; 
-    height: 320px;
+    gap: 10px; /* Gap ligeramente reducido */
+    width: 100%; 
+    max-width: 400px; /* Mantiene el tamaño ideal en PC */
+    aspect-ratio: 5/4; /* Mantiene la forma rectangular automáticamente */
+    height: auto; /* La altura se calcula sola */
+    margin-bottom: 40px;
+    margin-left: auto ;
+    margin-right: auto;
     
-    /* Definición de 5 columnas y 4 filas */
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(5, 1fr); 
+    grid-template-rows: repeat(4, 1fr);
     
-    /* Mapeo de las áreas (copiado de tu HTML de Arduino) */
     grid-template-areas:
         ".        top-left    up          top-right   ."
         "left-90  left-hold   center      right-hold  right-90"
         ".        bottom-left down        bottom-right ."
         ".        spin-left   horn        spin-right  .";
-        margin-bottom: 55px;
+}
+/* Ajuste para que los iconos no se vean gigantes en móviles */
+.btn-custom i {
+    font-size: clamp(1.2rem, 5vw, 2rem); 
+}
+/* --- Tablas con scroll interno fijo --- */
+.table-responsive {
+    max-height: 35vh; /* Altura dinámica */
+    overflow-y: auto;
 }
 
 .status-indicator {
@@ -249,3 +283,100 @@ body {
                 inset -5px -5px 10px var(--highlight-color);
     border: 1px solid rgba(37, 117, 252, 0.3); /* Borde sutil */
 }
+/* =========================================
+   ESTILOS NUEVOS PARA APP DE MONITOREO
+   ========================================= */
+
+/* Wrapper principal que divide Sidebar y Contenido */
+.monitor-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    /* Altura total disponible */
+    height: 100%; 
+}
+
+/* Barra Lateral (Sidebar) */
+.monitor-sidebar {
+    width: 250px;
+    background: var(--bg-color);
+    box-shadow: 5px 0 15px -5px var(--shadow-color);
+    padding: 20px;
+    flex-shrink: 0; /* No se encoge */
+    overflow-y: auto;
+    z-index: 10;
+}
+
+/* Contenido Principal del Monitoreo */
+.monitor-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* Aquí hacemos scroll del contenido principal */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Links del Sidebar */
+.sidebar-nav .nav-link {
+    color: var(--primary-text);
+    font-weight: 600;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+}
+.sidebar-nav .nav-link:hover { background-color: rgba(255,255,255,0.6); }
+.sidebar-nav .nav-link.active {
+    background-color: var(--bg-color);
+    color: var(--secondary-color);
+    box-shadow: inset 5px 5px 10px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+}
+
+/* --- Estilos del Mapa --- */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Llena el contenedor padre */
+    min-height: 300px;
+    border-radius: 15px;
+    background-color: #d1d9e6;
+    box-shadow: inset 5px 5px 10px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+    overflow: hidden;
+    /* Cuadrícula de fondo */
+    background-image: linear-gradient(rgba(163, 177, 198, 0.7) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(163, 177, 198, 0.7) 1px, transparent 1px);
+    background-size: 25px 25px;
+}
+
+#map-content {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    transform-origin: center center; transition: transform 0.2s ease-in-out;
+}
+/* Ejes cartesianos */
+#map-content::before { content: ''; position: absolute; left: 50%; top: 0; width: 2px; height: 100%; background: var(--shadow-color); transform: translateX(-50%); z-index: 1;}
+#map-content::after { content: ''; position: absolute; top: 50%; left: 0; height: 2px; width: 100%; background: var(--shadow-color); transform: translateY(-50%); z-index: 1;}
+
+.obstacle-marker { 
+    position: absolute; width: 15px; height: 15px; background: var(--warning-color); 
+    border-radius: 50%; transform: translate(-50%, -50%); z-index: 2; 
+    box-shadow: 0 0 5px var(--warning-shadow);
+}
+
+/* Controles de Zoom */
+.zoom-controls {
+    position: absolute; bottom: 15px; right: 15px; display: flex; flex-direction: column; gap: 5px;
+    background: var(--bg-color); padding: 5px; border-radius: 8px; box-shadow: 3px 3px 6px var(--shadow-color);
+}
+.zoom-btn { width: 30px; height: 30px; border: none; background: transparent; font-weight: bold; cursor: pointer; }
+
+/* Contenedor de gráficos */
+.chart-container { position: relative; width: 100%; height: 100%; min-height: 200px; }
+
+/* Puntos de estado (Online/Offline) */
+.status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.status-dot.online { background-color: var(--success-color); }
+.status-dot.offline { background-color: var(--stop-color); }
