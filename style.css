@@ -85,16 +85,15 @@ main {
 
 /* --- Pad de Control (Layout) --- */
 /* --- Pad de Control (Responsivo) --- */
-/* Busca esta clase y reemplázala */
 .control-pad {
     display: grid;
-    gap: 6px; /* CAMBIO: Reducido de 10px a 6px */
+    gap: 10px; /* Gap ligeramente reducido */
     width: 100%; 
-    max-width: 300px; /* CAMBIO: Reducido de 400px a 300px (esto lo hará más pequeño en tablet) */
-    aspect-ratio: 5/4;
-    height: auto;
-    margin-bottom: 20px; /* CAMBIO: Menos margen abajo */
-    margin-left: auto;
+    max-width: 400px; /* Mantiene el tamaño ideal en PC */
+    aspect-ratio: 5/4; /* Mantiene la forma rectangular automáticamente */
+    height: auto; /* La altura se calcula sola */
+    margin-bottom: 40px;
+    margin-left: auto ;
     margin-right: auto;
     
     grid-template-columns: repeat(5, 1fr); 
@@ -123,38 +122,29 @@ main {
     text-align: center; /* Asegura que los títulos estén centrados */
 }
 
-/* Busca esta clase y reemplázala */
+/* --- Estilo de Botones "Neumórfico" --- */
 .btn-custom {
-    border-radius: 10px; /* Un poco menos redondeado */
+    border-radius: 12px;
     background: var(--bg-color);
     border: none;
     color: var(--primary-text);
-    box-shadow: 4px 4px 8px var(--shadow-color), -4px -4px 8px var(--highlight-color); /* Sombra más sutil */
+    box-shadow: 5px 5px 10px var(--shadow-color), -5px -5px 10px var(--highlight-color);
     transition: all 0.1s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2px; /* Menos espacio entre icono y texto */
-    padding: 5px; /* CAMBIO: Padding reducido de 10px a 5px */
+    gap: 4px;
+    padding: 10px;
 }
 
-/* Ajuste del tamaño del icono */
+.btn-custom:active {
+    box-shadow: inset 5px 5px 10px var(--shadow-color), inset -5px -5px 10px var(--highlight-color);
+    transform: scale(0.98);
+}
+
 .btn-custom i {
-    font-size: 1.4rem; /* CAMBIO: Reducido de 2rem a 1.4rem */
-}
-
-/* Ajuste del tamaño del texto */
-.btn-custom span {
-    font-size: 0.65rem; /* CAMBIO: Reducido de 0.75rem a 0.65rem */
-    font-weight: 600;
-    line-height: 1; /* Texto más compacto */
-}
-
-/* Ajuste para móviles/tablets específico */
-.btn-custom i {
-    /* Ajustamos el clamp para que no crezca tanto */
-    font-size: clamp(1rem, 4vw, 1.5rem); 
+    font-size: 2rem;
 }
 .btn-custom span {
     font-size: 0.75rem;
@@ -392,50 +382,38 @@ main {
 .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
 .status-dot.online { background-color: var(--success-color); }
 .status-dot.offline { background-color: var(--stop-color); }
-/* =======================================================
-   MEDIA QUERY: AJUSTES PARA PANTALLAS GRANDES (PC/LAPTOP)
-   Se activa solo si el ancho es mayor a 992px
-   ======================================================= */
+/* --- RESPONSIVE FIX (Agregar al final de style.css) --- */
+
+/* Clase personalizada para altura 100% SOLO en pantallas grandes (Desktop) */
 @media (min-width: 992px) {
-
-    /* 1. Aumentamos el tamaño del contenedor del Pad */
-    .control-pad {
-        max-width: 500px; /* Mucho más ancho en PC */
-        gap: 15px;        /* Más espacio entre botones */
-        margin-bottom: 40px;
+    .h-lg-100 {
+        height: 100% !important;
     }
+}
 
-    /* 2. Botones más grandes y cómodos */
-    .btn-custom {
-        padding: 15px;       /* Más relleno interno */
-        border-radius: 15px; /* Bordes más redondeados acorde al tamaño */
-        gap: 5px;            /* Espacio entre icono y texto */
+/* Ajustes para pantallas pequeñas (Móviles/Tablets) */
+@media (max-width: 991px) {
+    /* Reactivar el scroll normal de la página */
+    html, body {
+        height: auto !important;
+        overflow-y: auto !important; /* Permite scroll vertical */
     }
 
-    /* 3. Iconos grandes para aprovechar el espacio */
-    .btn-custom i {
-        font-size: 2.2rem;   /* Iconos grandes */
+    main {
+        overflow-y: visible !important; /* Deja que el contenido crezca */
+        height: auto !important;
+        display: block !important; /* Quita el flex que estira cosas innecesariamente */
     }
 
-    /* 4. Texto más legible */
-    .btn-custom span {
-        font-size: 0.9rem;
-        margin-top: 2px;
+    /* Que las tarjetas tengan altura automática según su contenido */
+    .card {
+        max-height: none !important; 
+        height: auto !important;
+        margin-bottom: 20px; /* Espacio entre tarjetas apiladas */
     }
 
-    /* 5. Aumentar el padding de la tarjeta contenedora */
-    .card-body {
-        padding: 2rem !important; /* Más aire alrededor de todo el control */
-    }
-    
-    /* 6. Ajuste específico para los botones anchos (Secuencia/Auto) en PC */
-    [data-action="12"].btn-custom, 
-    #btn-auto-mode.btn-custom {
-        font-size: 1.1rem;
-        padding: 15px;
-    }
-    [data-action="12"].btn-custom i, 
-    #btn-auto-mode.btn-custom i {
-        font-size: 1.5rem;
+    /* Altura fija específica para la tabla en móvil para que no sea infinita */
+    .table-responsive {
+        max-height: 300px !important;
     }
 }
